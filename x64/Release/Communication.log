@@ -1,0 +1,26 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: The intermediate directory (x64\Release\) contains files shared from another project (BaseMod.vcxproj, CustomInventorySize.vcxproj, ExampleMod.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Communication.cpp
+d:\onedrive - ugent\ai\c++\satisfactory\clean\satisfactorymodloader\satisfactorymodloader\util\fkey.h(77): warning C4667: 'void SML::Objects::subscribe(std::function<const SML::Objects::FString *(SML::Mod::Functions::ModReturns *,C *)>)': no function template defined that matches forced instantiation
+          with
+          [
+              C=SML::Objects::FText
+          ]
+d:\onedrive - ugent\ai\c++\satisfactory\clean\satisfactorymodloader\satisfactorymodloader\game\sdkhooks.h(6): warning C4667: 'void subscribe(std::function<void (SML::Mod::Functions::ModReturns *,C *)>)': no function template defined that matches forced instantiation
+          with
+          [
+              C=SDK::AActor
+          ]
+d:\onedrive - ugent\ai\c++\satisfactory\clean\satisfactorymodloader\satisfactorymodloader\memory\memoryobject.h(44): warning C4251: 'SML::MemoryObject<O>::bytes': class 'std::vector<uint8_t,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'SML::MemoryObject<O>'
+          with
+          [
+              _Ty=uint8_t
+          ]
+  d:\onedrive - ugent\ai\c++\satisfactory\clean\satisfactorymodloader\satisfactorymodloader\util\json.hpp(19229): note: see declaration of 'std::vector<uint8_t,std::allocator<_Ty>>'
+          with
+          [
+              _Ty=uint8_t
+          ]
+  d:\onedrive - ugent\ai\c++\satisfactory\clean\satisfactorymodloader\satisfactorymodloader\memory\memoryobject.h(46): note: see reference to class template instantiation 'SML::MemoryObject<O>' being compiled
+     Creating library D:\OneDrive - UGent\AI\C++\Satisfactory\Clean\SatisfactoryModLoader\x64\Release\Communication.lib and object D:\OneDrive - UGent\AI\C++\Satisfactory\Clean\SatisfactoryModLoader\x64\Release\Communication.exp
+  LINK : /LTCG specified but no code generation required; remove /LTCG from the link command line to improve linker performance
+  Communication.vcxproj -> D:\OneDrive - UGent\AI\C++\Satisfactory\Clean\SatisfactoryModLoader\x64\Release\Communication.dll

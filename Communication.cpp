@@ -28,16 +28,6 @@
 #pragma comment(lib,"ws2_32.lib")
 
 
-/*
-EXAMPLEMOD
-==========
-ExampleMod is a documented mod that uses all the available features of SML and can help you mod.
-If you are confused about what to do, just type Functions:: and autocomplete will give you options on some functions that you can use.
-If you don't know how to do something/use something, simply hover over it to read the provided documentation. If you're still confused, come to the discord and ask in #sml-help about your issue.
-SuperCoder will help you with your problem.
-*/
-
-
 
 // Use the namespaces so you have to type less stuff when adding on to your mod
 using namespace SML::Mod;
@@ -48,7 +38,7 @@ using namespace std;
 #define SML_VERSION "1.0.0-pr6"
 
 // define the mod name for easy changing and simple use
-#define MOD_NAME "Commu"
+#define MOD_NAME "Communication"
 
 // Define logging macros to make outputting to the log easier
 
@@ -124,7 +114,7 @@ Mod::Info modInfo {
 };
 
 // The mod's class, put all functions inside here
-class ExampleMod : public Mod {
+class Communication : public Mod {
 
 	// Function to be hooked
 	// Every hook has two parameters at the start, even when the target function does not have any parameters.
@@ -232,25 +222,10 @@ class ExampleMod : public Mod {
 		
 		SetSocketBlocking(s, false);
 		// listen to incoming connections
-		listens();
-		
-		//sprintf_s(buffer, "Waiting for incoming data...");
-		//LOG(buffer);
+		//listens();
 
 		return 1;
 	}
-
-	// tick function
-	/*void sTick() {
-
-		// ...
-			
-		// check if there is a waiting connection
-		
-		listens();
-
-		// ...
-	}*/
 
 	inline bool SetSocketBlocking(SOCKET sock, bool blocking)
 	{
@@ -415,70 +390,75 @@ class ExampleMod : public Mod {
 	}
 
 	void process_incoming(string message) {
-		LOG(message);
-
-		std::stringstream test(message);
-		std::string segment;
-		std::vector<std::string> seglist;
-		
-		while (std::getline(test, segment, ';'))
-		{
-			seglist.push_back(segment);
-		}
-
-		if (seglist.size() == 1) {
-			//sendMessageToPlayer(str);
-		}
-		else if (seglist[0] == "dChat") {
-			Functions::sendMessageToPlayer(string("\t" + seglist[1] + "\t"));
-		}
+		//LOG(message);
+		std::string level = Functions::getWorld()->CurrentLevel->GetFullName();
+		if (level == "Level Persistent_Level.Persistent_Level.PersistentLevel" || endsWith(level, "PreviewBuildingWorld.PersistentLevel")) {
 
 
 
+			std::stringstream test(message);
+			std::string segment;
+			std::vector<std::string> seglist;
+
+			while (std::getline(test, segment, ';'))
+			{
+				seglist.push_back(segment);
+			}
+
+			if (seglist.size() == 1) {
+				//sendMessageToPlayer(str);
+			}
+			else if (seglist[0] == "dChat") {
+				Functions::sendMessageToPlayer(string("\t" + seglist[1] + "\t"));
+			}
 
 
-		else if (seglist[0] == "donation") {
-			LOG("Donation detected");
-			if (api_on_donation) {
-				LOG("Donation allowed");
-				on_donation(seglist[1], seglist[2], std::stof(seglist[3]), seglist[4], seglist[5]);
+
+
+
+			else if (seglist[0] == "donation") {
+				LOG("Donation detected");
+				if (api_on_donation) {
+					LOG("Donation allowed");
+					on_donation(seglist[1], seglist[2], std::stof(seglist[3]), seglist[4], seglist[5]);
+				}
+			}
+			else if (seglist[0] == "member") {
+				if (api_on_donation) {
+					LOG("member detected");
+					on_member(seglist[1], seglist[2], seglist[3], seglist[4], std::stoi(seglist[5]), seglist[6], seglist[7]);
+				}
+			}
+			else if (seglist[0] == "follow") {
+				if (api_on_donation) {
+					on_follow(seglist[1]);
+				}
+			}
+			else if (seglist[0] == "raid") {
+				if (api_on_donation) {
+					on_raid(seglist[1], std::stoi(seglist[2]));
+				}
+			}
+			else if (seglist[0] == "host") {
+				if (api_on_donation) {
+					on_host(seglist[1], std::stoi(seglist[2]));
+				}
+			}
+			else if (seglist[0] == "merch") {
+				if (api_on_donation) {
+					LOG("merch not implemented yet");
+				}
 			}
 		}
-		else if (seglist[0] == "member") {
-			if (api_on_donation) {
-				LOG("member detected");
-				on_member(seglist[1], seglist[2], seglist[3], seglist[4], std::stoi(seglist[5]), seglist[6], seglist[7]);
-			}
-		}
-		else if (seglist[0] == "follow") {
-			if (api_on_donation) {
-				on_follow(seglist[1]);
-			}
-		}
-		else if (seglist[0] == "raid") {
-			if (api_on_donation) {
-				on_raid(seglist[1], std::stoi(seglist[2]));
-			}
-		}
-		else if (seglist[0] == "host") {
-			if (api_on_donation) {
-				on_host(seglist[1], std::stoi(seglist[2]));
-			}
-		}
-		else if (seglist[0] == "merch") {
-			if (api_on_donation) {
-				LOG("merch not implemented yet");
-			}
-		}
-
 	}
+
 
 
 	// listen for incomming mod server connections
 	int listens() {
 		
 		char  buffer[500];
-		LOG("checking new data:");
+		//LOG("checking new data:");
 		recv(s, buffer, 500, 0);
 		
 		
@@ -505,7 +485,7 @@ class ExampleMod : public Mod {
 
 public:
 	// Constructor for SML usage. Do not put anything in here, use setup() instead.
-	ExampleMod() : Mod(modInfo) {
+	Communication() : Mod(modInfo) {
 	}
 	
 
@@ -522,7 +502,7 @@ public:
 		// * The functions that will be of use to you are in the SML::Mods::Functions namespace. A tip is to type Functions:: and see what functions are available for you to use. 
 
 		// Hook a member function as handler
-		::subscribe<&AFGPlayerController::BeginPlay>(std::bind(&ExampleMod::beginPlay, this, _1, _2)); //bind the beginPlay function, with placeholder variables
+		::subscribe<&AFGPlayerController::BeginPlay>(std::bind(&Communication::beginPlay, this, _1, _2)); //bind the beginPlay function, with placeholder variables
 		// Because there are two inputs to the function, we use _1 and _2. If there were 3 inputs, we would use _1, _2, and _3, and so forth.
 
 		// Hook a lambda with captured this-ptr as handler
@@ -558,22 +538,11 @@ public:
 
 		
 		
-		//Here, we do some registring. Registring must be done in setup to make sure that the registration will be available for later use.
-
-		// Register /kill to call the killPlayer function
-		Functions::registerCommand("kill", killPlayer); //functions registered like this must exist outside of the class or be static members of the class
-
-		// Register killPlayer as a function that other mods can use if this mod is loaded.
-		Functions::registerAPIFunction("KillPlayer", killPlayer);
-
 		//Register a custom event. This does not call the event, you have to do that with Functions::broadcastEvent.
 		Functions::registerEvent("ExampleMod_PostSetupComplete", postSetupComplete);
 
-		//cache this asset at loading to make sure that when it's spawned, slowdowns won't occur at runtime
-		//calling this function while in game will cache the asset immediately, causing a slowdown.
-		Functions::registerAssetForCache(L"\\Game\\FactoryGame\\Character\\Creature\\Wildlife\\SpaceRabbit\\Char_SpaceRabbit.Char_SpaceRabbit_C");
 
-		LOG("Finished ExampleMod setup!");
+		LOG("Finished Communication setup!");
 	}
 
 	//The postSetup function is where you do things based on other mods' setup functions
@@ -581,26 +550,9 @@ public:
 		// Write things to be done after other mods' setup functions
 		// Called after the post setup functions of mods that you depend on.
 
-		// Check if mod "RandomMod" is loaded
-		if (Functions::isModLoaded("RandomMod")) {
-			LOG("Random mod is loaded!");
-			// Grab the raw function pointer for "NonexistantFunction"
-			PVOID nonexistantFuncRaw = Functions::getAPIFunction("NonexistantFunction");
-			// Cast the raw function pointer into a usable function
-			auto nonexistantFunc = (void(WINAPI*)())nonexistantFuncRaw;
-			// Call the nonexistant function
-			nonexistantFunc();
-			// Sidenote: this code should crash because it is trying to access a function that is not registered, but it does not because we ensure the code is only run when "RandomMod" is loaded.
-		}
-
-		//Broadcast the event for ExampleMod and other mods that do something for ExampleMod_PostSetupComplete.
-		Functions::broadcastEvent("ExampleMod_PostSetupComplete");
-
-		//Broadcast an event from RandomMod. Since this doesn't exist, nothing will be done and no error will be thrown.
-		Functions::broadcastEvent("RandomMod_SomeEvent");
 	}
 
-	~ExampleMod() {
+	~Communication() {
 		// Cleanup
 		LOG("ExampleMod finished cleanup!");
 	}
@@ -610,5 +562,5 @@ public:
 
 // Required function to create the mod, do not rename!
 MOD_API Mod* ModCreate() {
-	return new ExampleMod();
+	return new Communication();
 }
