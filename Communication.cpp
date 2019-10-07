@@ -57,7 +57,7 @@ using namespace std;
 // Config
 json config = SML::Utility::JsonConfig::load(MOD_NAME, {
 	{"Version", "0.1" },
-	{"api", "empty"},
+	{"streamlabs", "token"},
 	{"member", true},
 	{"superchat", true},
 	{"donation", true},
@@ -207,7 +207,7 @@ class Communication : public Mod {
 		sending_message(&username);
 		listens();
 		version = config["Version"]; sending_message(&version);
-		api = config["api"];sending_message(&api);
+		api = config["streamlabs"];sending_message(&api);
 		
 		currency = config["currency"];sending_message(&currency);
 		guild_id = config["guild_id"];sending_message(&guild_id);
