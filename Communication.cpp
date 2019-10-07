@@ -87,7 +87,7 @@ void killPlayer(Functions::CommandData data) {
 // Other mods can also make a handler for ExampleMod_PostSetupComplete if they want to do something when the event is broadcast.
 void postSetupComplete() {
 
-	LOG("ExampleMod's post setup has been completed!");
+	LOG("Communication's post setup has been completed!");
 
 }
 
@@ -100,10 +100,10 @@ Mod::Info modInfo {
 	MOD_NAME,
 
 	// Version
-	"0.1.1",
+	"0.1.2",
 
 	// Description
-	"A basic mod to change inventory size.",
+	"This mod makes it able to display streamlabs events into the ingame chat.",
 
 	// Authors
 	"Stinosko",
@@ -536,11 +536,6 @@ public:
 			}
 		});
 
-		
-		
-		//Register a custom event. This does not call the event, you have to do that with Functions::broadcastEvent.
-		Functions::registerEvent("ExampleMod_PostSetupComplete", postSetupComplete);
-
 
 		LOG("Finished Communication setup!");
 	}
@@ -554,7 +549,7 @@ public:
 
 	~Communication() {
 		// Cleanup
-		LOG("ExampleMod finished cleanup!");
+		LOG("Communication mod finished cleanup!");
 	}
 
 
